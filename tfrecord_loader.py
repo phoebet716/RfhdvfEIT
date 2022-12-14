@@ -8,7 +8,6 @@ import itertools
 class TFRecordLoader:
     def __init__(self, index_fname, batch_size, parse_fn, map_fn=None, restore_state=None):
         if restore_state is not None:
-            self.file_idx = restore_state["file_idx"]
             self.file_idx_init = False
             self.used = restore_state["used"]
         else:
@@ -74,7 +73,6 @@ class TFRecordLoader:
         }
 
 
-class TFRecordNewInputs(TFRecordLoader):
     def __init__(self, index_fname, batch_size, sample_size, restore_state=None):
         def tf_parse(example_proto):
             features = {
@@ -130,7 +128,6 @@ class TFRecordWIT(TFRecordLoader):
                 "caption_attribution_description": tf.io.FixedLenFeature([], tf.string),
                 "caption_alt_text_description": tf.io.FixedLenFeature([], tf.string),
                 "mime_type": tf.io.FixedLenFeature([], tf.string),
-                "context_page_description": tf.io.FixedLenFeature([], tf.string),
                 "context_section_description": tf.io.FixedLenFeature([], tf.string),
 
                 "dalle": tf.io.FixedLenFeature([1024], tf.int64),
